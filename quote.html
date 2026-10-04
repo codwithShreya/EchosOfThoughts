@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Find Your Thought | Echoes of Thoughts</title>
+
+    <!-- Inline CSS -->
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f5f2;
+            color: #555555;
+        }
+
+
+        /* ---------- Navigation ---------- */
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px 60px;
+
+            background: white;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4b3b70;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #5b4b8a;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #45366f;
+        }
+
+
+        /* ---------- Quote Page ---------- */
+
+        .quote-page {
+            min-height: 80vh;
+            text-align: center;
+            padding: 70px 20px;
+
+            background: linear-gradient(
+                135deg,
+                #eee7f7,
+                #f7f5f2
+            );
+        }
+
+        .quote-page h1 {
+            font-size: 46px;
+            color: #4b3b70;
+            margin-bottom: 12px;
+        }
+
+        .quote-intro {
+            font-size: 18px;
+            color: #666666;
+            max-width: 600px;
+            margin: 0 auto 35px;
+            line-height: 1.6;
+        }
+
+
+        /* ---------- Selection Options ---------- */
+
+        .quote-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .quote-options select {
+            width: 220px;
+            padding: 13px 15px;
+
+            border: 1px solid #d0c8df;
+            border-radius: 12px;
+
+            background: white;
+            color: #4b3b70;
+
+            font-size: 15px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .quote-options select:focus {
+            border-color: #6b5b95;
+        }
+
+
+        /* ---------- Quote Card ---------- */
+
+        .quote-card-new {
+            max-width: 700px;
+            margin: 0 auto 30px;
+
+            padding: 40px;
+
+            background: white;
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 12px 35px rgba(75, 59, 112, 0.15);
+        }
+
+
+        /* ---------- Image + Quote ---------- */
+
+        .quote-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .quote-image {
+            width: 45%;
+        }
+
+        .quote-image img {
+            width: 100%;
+            height: 220px;
+
+            object-fit: cover;
+
+            border-radius: 18px;
+        }
+
+        .quote-text {
+            width: 55%;
+            text-align: center;
+        }
+
+
+        /* ---------- No Image ---------- */
+
+        .quote-content.no-image .quote-image {
+            display: none;
+        }
+
+        .quote-content.no-image .quote-text {
+            width: 100%;
+            text-align: center;
+        }
+
+
+        /* ---------- Quote Mark ---------- */
+
+        .quote-mark {
+            font-size: 60px;
+            color: #6b5b95;
+            height: 45px;
+        }
+
+        #generatedQuote {
+            font-size: 25px;
+            line-height: 1.6;
+
+            color: #4b3b70;
+
+            font-style: italic;
+
+            margin: 15px 0 20px;
+        }
+
+        #generatedAuthor {
+            font-size: 16px;
+            color: #777777;
+            font-weight: bold;
+        }
+
+
+        /* ---------- Generate Button ---------- */
+
+        #generateQuote {
+            border: none;
+
+            padding: 15px 32px;
+
+            border-radius: 30px;
+
+            background: linear-gradient(
+                135deg,
+                #6b5b95,
+                #4b3b70
+            );
+
+            color: white;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 20px rgba(75, 59, 112, 0.25);
+
+            transition: 0.3s;
+        }
+
+        #generateQuote:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 25px rgba(75, 59, 112, 0.35);
+        }
+
+
+        /* ---------- Extra Buttons ---------- */
+
+        .quote-actions {
+            margin-top: 22px;
+
+            display: flex;
+            justify-content: center;
+
+            gap: 15px;
+        }
+
+        .quote-actions button {
+            padding: 10px 20px;
+
+            border: 1px solid #cfc5df;
+            border-radius: 20px;
+
+            background: white;
+            color: #5b4b8a;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .quote-actions button:hover {
+            background: #eee7f7;
+            transform: translateY(-2px);
+        }
+
+
+        /* ---------- Back Home ---------- */
+
+        .back-home {
+            display: inline-block;
+
+            margin-top: 30px;
+
+            text-decoration: none;
+
+            color: #5b4b8a;
+
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .back-home:hover {
+            color: #45366f;
+        }
+
+
+        /* ---------- Footer ---------- */
+
+        footer {
+            text-align: center;
+
+            padding: 22px;
+
+            background: white;
+
+            color: #777777;
+
+            font-size: 14px;
+        }
+
+
+        /* ---------- Mobile ---------- */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 18px 20px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            .quote-page {
+                padding: 50px 20px;
+            }
+
+            .quote-page h1 {
+                font-size: 36px;
+            }
+
+            .quote-options {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .quote-options select {
+                width: 90%;
+                max-width: 300px;
+            }
+
+            .quote-card-new {
+                padding: 30px 20px;
+            }
+
+
+            /* Image above quote on mobile */
+
+            .quote-content {
+                flex-direction: column;
+            }
+
+            .quote-image {
+                width: 100%;
+            }
+
+            .quote-image img {
+                height: 200px;
+            }
+
+            .quote-text {
+                width: 100%;
+            }
+
+            #generatedQuote {
+                font-size: 20px;
+            }
+
+            .quote-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navigation Bar -->
+
+    <header>
+
+        <div class="logo">
+            Echoes of Thoughts
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="quote.html">
+                Quotes
+            </a>
+            
+             <a href="favorites.html">
+                Favorites
+            </a>
+            
+
+
+        </nav>
+
+    </header>
+
+
+    <!-- Quote Generator Page -->
+
+    <section class="quote-page">
+
+        <h1>
+            Find Your Thought
+        </h1>
+
+        <p class="quote-intro">
+            Choose a language and category to discover a thought
+            that speaks to you.
+        </p>
+
+
+        <!-- Selection Options -->
+
+        <div class="quote-options">
+
+            <select id="language">
+
+                <option value="">
+                    Select Language
+                </option>
+
+                <option value="english">
+                    English
+                </option>
+
+                <option value="hindi">
+                    Hindi
+                </option>
+
+                <option value="marathi">
+                    Marathi
+                </option>
+
+            </select>
+
+
+            <select id="category">
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="motivation">
+                    Motivation
+                </option>
+
+                <option value="life">
+                    Life
+                </option>
+
+                <option value="success">
+                    Success
+                </option>
+
+                <option value="study">
+                    Study
+                </option>
+
+                <option value="friendship">
+                    Friendship
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Quote Card -->
+
+        <div class="quote-card-new">
+
+            <!-- no-image makes the initial quote centered -->
+
+            <div class="quote-content no-image">
+
+
+                <!-- Quote Image -->
+
+                <div class="quote-image">
+
+                    <img
+                        id="generatedImage"
+                        src=""
+                        alt="Quote Image">
+
+                </div>
+
+
+                <!-- Quote Text -->
+
+                <div class="quote-text">
+
+                    <div class="quote-mark">
+                        “
+                    </div>
+
+                    <p id="generatedQuote">
+                        Your thoughts become the echoes of your journey.
+                    </p>
+
+                    <p id="generatedAuthor">
+                        — Echoes of Thoughts
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Generate Button -->
+
+        <button id="generateQuote">
+            ✨ Generate Another Quote
+        </button>
+
+
+        <!-- Extra Buttons -->
+
+        <div class="quote-actions">
+
+            <button id="favorite">
+                ♡ Favorite
+            </button>
+
+            <button id="copy">
+                📋 Copy Quote
+            </button>
+
+        </div>
+
+
+        <!-- Back Home -->
+
+        <a href="index.html" class="back-home">
+            ← Back to Home
+        </a>
+
+    </section>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <p>
+            © 2026 Echoes of Thoughts | A Multilingual Quote Platform
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
